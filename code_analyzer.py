@@ -193,6 +193,7 @@ class ASTNodeAnalyzer(ast.NodeVisitor):
          lineno_to_issues_map (Dict[int, List[str]]): A dictionary that maps line numbers to a list of issue messages
          that occurred in that line. Each line number may have multiple issues associated with it.
     """
+
     def __init__(self) -> None:
         """
         Initializes the ASTNodeAnalyzer object.
@@ -295,10 +296,7 @@ class ASTNodeAnalyzer(ast.NodeVisitor):
 
         """
         if issue:
-            if lineno in self.lineno_to_issues_map:
-                self.lineno_to_issues_map[lineno].append(issue)
-            else:
-                self.lineno_to_issues_map[lineno] = [issue]
+            self.lineno_to_issues_map.setdefault(lineno, []).append(issue)
 
     @staticmethod
     def invalid_arg_var_names(arg_name=None, var_name=None) -> Optional[str]:
